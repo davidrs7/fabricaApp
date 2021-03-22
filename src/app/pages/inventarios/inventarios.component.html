@@ -1,0 +1,160 @@
+ <!-- Formulario de datos que le interesan a la fabrica, por el momento los valores van quemados mientras se crea el servicio web para llenarlos dinamicamente -->
+ <form autocomplete="off" class="row g-3 talla"  [formGroup]="formulario"   > 
+    <div class="col-auto md-5">
+        <b>Referencia</b> 
+        <select class="form-select "  formControlName="referencia">  
+            <option
+            [class.is-invalid]="referenciaNovalido" 
+            style="color:gray" 
+            *ngFor="let referencia of referencias"
+            value="{{referencia.codigo}}">
+            {{referencia.nombre}}
+            </option>
+        </select>
+        <small *ngIf="referenciaNovalido" class="text-danger">
+            Seleccione una referencia
+        </small>
+    </div>
+    <div class="col-auto">
+        <b>Color</b> 
+        <select class="form-select "  formControlName="color">  
+        <option
+        [class.is-invalid]="colorNovalido" 
+        style="color:gray" 
+        *ngFor="let color of colores"
+        value="{{color.codigo}}">
+        {{color.nombre}}
+        </option>
+    </select>
+        <small *ngIf="colorNovalido" class="text-danger">
+            Seleccione un color
+        </small>
+    </div>
+        <div class="col-auto">
+          <b>Talla</b>  
+            <select class="form-select "  formControlName="talla">  
+                <option
+                [class.is-invalid]="tallaNovalido" 
+                style="color:gray" 
+                *ngFor="let talla of tallas"
+                value="{{talla.codigo}}">
+                {{talla.nombre}}
+                </option>
+            </select>
+            <small *ngIf="tallaNovalido" class="text-danger">
+                Seleccione una talla
+            </small>
+        </div>
+    
+        <div class="col-auto">
+            <b>Vendedor</b>  
+            <select class="form-select "  formControlName="vendedor">  
+                <option
+                [class.is-invalid]="vendedorNovalido" 
+                style="color:gray" 
+                *ngFor="let vendedor of vendedores" 
+                value="{{vendedor.codigo}}">
+                {{vendedor.nombres}} {{vendedor.apellidos}}
+                </option>
+            </select>
+            <small *ngIf="vendedorNovalido" class="text-danger">
+                Seleccione un vendedor
+            </small>
+        </div>
+        
+          <div class="col-auto">
+            <b>Cantidad</b>  
+           <input class="form-control" type="text" formControlName="cantidad" [class.is-invalid]="cantidadNoValido" />
+           <small *ngIf="cantidadNoValido" class="text-danger">
+            Por favor ingrese una cantidad numerica
+        </small>
+          </div>
+           
+          <div class="col-auto"> 
+              <b class="visually-hidden"></b>
+        </div>
+        <div class="col-auto">
+            <button type="button" (click)="validaDisponibilidad()" class="btn btn-primary">validar disponibilidad</button> 
+        </div>  
+    
+        <div class="col-auto">
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                Tabla inventario
+              </button>
+        </div> 
+        <div class="col-auto">  
+            <small *ngIf="mensajeDisponible.length>0" [class]="classDisponible">  
+            <b> {{mensajeDisponible}}</b>
+         </small></div>
+        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <app-grids></app-grids>
+        </div>
+      </form>
+      <br>  
+      <br>
+      
+      <!-- Formulario para llenar los datos del cliente -->
+    
+      <form class="row g-3 talla" >
+        <div class="col-auto">
+            <label>Nombres</label>
+        </div>
+        <div class="col-auto">
+            <input type="text" name="" />
+        </div>
+    
+        <div class="col-auto">
+            <label>Apellidos</label>
+        </div>
+        <div class="col-auto">
+            <input type="text" name="" />
+        </div>
+    
+        <div class="col-auto">
+            <label>Ciudad</label>
+        </div>
+        <div class="col-auto">
+            <input type="text" name="" />
+        </div>
+    
+        <div class="col-auto">
+            <label>Localidad</label>
+        </div>
+        <div class="col-auto">
+            <input type="text" name="" />
+        </div>
+    
+        <div class="col-auto">
+            <label>Telefono</label>
+        </div>
+        <div class="col-auto">
+            <input type="text" name="" />
+        </div>
+        <div class="col-auto">
+            <label>Dirección</label>
+        </div>
+        <div class="col-auto">
+            <input type="text" name="" />
+        </div>
+        <div class="col-auto">
+            <label>Barrio</label>
+        </div>
+        <div class="col-auto">
+            <input type="text" name="" />
+        </div>
+        
+        <br> 
+        
+          </form>
+    <br>
+          <button type="button" class="btn btn-success"> + Agregar</button> 
+          
+    <br>
+    <br>
+    <br>
+          <div class="row">
+            <div class="col">
+                    
+            </div>
+    
+        </div>

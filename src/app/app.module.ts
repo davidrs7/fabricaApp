@@ -3,10 +3,14 @@ import { NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { InventariosComponent } from './pages/inventarios/inventarios.component';
+import { GridsComponent } from './pages/grids/grids.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    InventariosComponent,
+    GridsComponent
   ],
   imports: [
     BrowserModule,
