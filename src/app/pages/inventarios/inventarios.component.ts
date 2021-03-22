@@ -16,26 +16,38 @@ export class InventariosComponent implements OnInit {
   inventarioTotal: any[] = [];
   inventarioConsultado: any[] = [];
   mensajeDisponible: string ='';
+  mensajeFactura: string ='';
   classDisponible: string=''; 
-  formulario: FormGroup;
+  formulario: FormGroup | undefined; 
+  formularioCliente:FormGroup | undefined;
   constructor(private ServiceInventario: InventarioService,private fb: FormBuilder) {
-   // this.crearFormulario();
+     this.crearFormulario();
+     this.crearFormularioCliente();
+   
+   }
+   crearFormulario(){
+    console.log('crea formulario');
     this.formulario = this.fb.group({
       referencia:['0',Validators.required],
       color:['0',Validators.required],
       talla:['0',Validators.required],
       vendedor:['0',Validators.required],      
-      cantidad:['',[Validators.required,Validators.pattern("^[0-9]*$")]],
-      /*talla: this.fb.group({
-        vendedor:['',Validators.required],
-        ciudad:['',Validators.required],
-
-      }),
-      pasatiempos: this.fb.array([])*/
-      
+      cantidad:['',[Validators.required,Validators.pattern("^[0-9]*$")]],       
     })
-   }
-    
+  }
+
+  crearFormularioCliente(){
+    console.log('crea formulario');
+    this.formularioCliente = this.fb.group({
+      nombres:['',Validators.required],
+      apellidos:['',Validators.required],
+      ciudad:['',Validators.required],
+      direccion:['',Validators.required],      
+      barrio:['',Validators.required],      
+      localidad:['',Validators.required],      
+      telefono:['',Validators.required]   
+    })
+  }
 
   ngOnInit(): void {
     this.ServiceInventario.getReferencias()
@@ -71,52 +83,26 @@ this.ServiceInventario.getTallas()
         
 this.tallas.unshift({
       nombre: 'seleccione una talla',
-      codigo: '0'});  
-
-
-
+      codigo: '0'});   
 }); 
   }
 
-  crearFormulario(){
-    console.log('crea formulario');
-  }
-  
-  get referenciaNovalido(){  
-    return (this.formulario.get('referencia')!.invalid && this.formulario.get('referencia')!.touched) || (this.formulario.get('referencia')!.value == 0 && this.formulario.get('referencia')!.touched);    
-    }     
-  get colorNovalido(){   
-     return (this.formulario.get('color')!.invalid && this.formulario.get('color')!.touched) || (this.formulario.get('color')!.value == 0 && this.formulario.get('color')!.touched);    
-  }   
-
-  get tallaNovalido(){ 
-     return (this.formulario.get('talla')!.invalid && this.formulario.get('talla')!.touched) || (this.formulario.get('talla')!.value == 0 && this.formulario.get('talla')!.touched)
-  }   
-
-   get vendedorNovalido(){
-   return (this.formulario.get('vendedor')!.invalid && this.formulario.get('vendedor')!.touched) || (this.formulario.get('vendedor')!.value == 0 && this.formulario.get('vendedor')!.touched)
-   }   
-   get cantidadNoValido(){ 
-    return (this.formulario.get('cantidad')!.invalid && this.formulario.get('cantidad')!.touched) || (this.formulario.get('cantidad')!.value == 0 && this.formulario.get('cantidad')!.touched)
-    }  
-  
     limpiarmensaje(){
       this.mensajeDisponible = "";
     }
+ 
   validaDisponibilidad(){  
-    if (this.formulario.invalid){
+    if (this.formulario!.invalid){
      
-      Object.values(this.formulario.controls).forEach(control => {
+      Object.values(this.formulario!.controls).forEach(control => {
         control.markAsTouched();
       });
       return; 
-    } else {
-      
-   //console.log('Validar Disponibilidad');
+    } else { 
    //console.log(this.formulario.value);
    this.ServiceInventario.getInventarios()
    .subscribe(inventarios => {
-     this.inventarioConsultado =inventarios.filter(element => element.ref_codigo == this.formulario.value.referencia && element.talla_codigo == this.formulario.value.talla && element.color_codigo ==this.formulario.value.color);
+     this.inventarioConsultado =inventarios.filter(element => element.ref_codigo == this.formulario!.value.referencia && element.talla_codigo == this.formulario!.value.talla && element.color_codigo ==this.formulario!.value.color);
      this.inventarioTotal = inventarios
     console.log(this.inventarioConsultado);
     console.log(this.inventarioTotal);  
@@ -127,9 +113,7 @@ this.tallas.unshift({
       this.classDisponible = 'text-danger';
       return;
     }
-   
-
-    if (this.inventarioConsultado[0].cantidad < this.formulario.value.cantidad){
+    if (this.inventarioConsultado[0].cantidad < this.formulario!.value.cantidad){
       this.mensajeDisponible = 'No existe disponibilidad, actualmente existen: '+ this.inventarioConsultado[0].cantidad + ' unidades en stock'
       this.classDisponible = 'text-danger'
       console.log(this.mensajeDisponible);
@@ -143,6 +127,73 @@ this.tallas.unshift({
   }
 
 
+  Agregarfactura(){
+    
+    if (this.formulario!.invalid && this.formularioCliente!.invalid){
+     
+      Object.values(this.formulario!.controls).forEach(control => {
+        control.markAsTouched();
+      });
+      Object.values(this.formularioCliente!.controls).forEach(control => {
+        control.markAsTouched();
+      });
+      return; 
+    } else { 
+
+      console.log('Pasó todas las validaciones!!');
+      this.mensajeFactura ="Funcionalidad en construcción"
+    }
+
+ 
+  }
+
+
+   // ************** validadores del formulario del inventario *********************// 
+  get referenciaNovalido(){  
+    return (this.formulario!.get('referencia')!.invalid && this.formulario!.get('referencia')!.touched) || (this.formulario!.get('referencia')!.value == 0 && this.formulario!.get('referencia')!.touched);    
+    }     
+  get colorNovalido(){   
+     return (this.formulario!.get('color')!.invalid && this.formulario!.get('color')!.touched) || (this.formulario!.get('color')!.value == 0 && this.formulario!.get('color')!.touched);    
+  }   
+
+  get tallaNovalido(){ 
+     return (this.formulario!.get('talla')!.invalid && this.formulario!.get('talla')!.touched) || (this.formulario!.get('talla')!.value == 0 && this.formulario!.get('talla')!.touched)
+  }   
+
+   get vendedorNovalido(){
+   return (this.formulario!.get('vendedor')!.invalid && this.formulario!.get('vendedor')!.touched) || (this.formulario!.get('vendedor')!.value == 0 && this.formulario!.get('vendedor')!.touched)
+   }   
+   get cantidadNoValido(){ 
+    return (this.formulario!.get('cantidad')!.invalid && this.formulario!.get('cantidad')!.touched) || (this.formulario!.get('cantidad')!.value == '' && this.formulario!.get('cantidad')!.touched)
+    }  
+
+ // ************* validadores del formulario de cliente ************// 
+ get nombresNoValido(){ 
+  return (this.formularioCliente!.get('nombres')!.invalid && this.formularioCliente!.get('nombres')!.touched) || (this.formularioCliente!.get('nombres')!.value == '' && this.formularioCliente!.get('nombres')!.touched)
+  }  
+
+  get apellidosNoValido(){ 
+    return (this.formularioCliente!.get('apellidos')!.invalid && this.formularioCliente!.get('apellidos')!.touched) || (this.formularioCliente!.get('apellidos')!.value == '' && this.formularioCliente!.get('apellidos')!.touched)
+    }  
+
+    get ciudadNoValido(){ 
+      return (this.formularioCliente!.get('ciudad')!.invalid && this.formularioCliente!.get('ciudad')!.touched) || (this.formularioCliente!.get('ciudad')!.value == '' && this.formularioCliente!.get('ciudad')!.touched)
+      }  
+      get direccionNoValido(){ 
+        return (this.formularioCliente!.get('direccion')!.invalid && this.formularioCliente!.get('direccion')!.touched) || (this.formularioCliente!.get('direccion')!.value == '' && this.formularioCliente!.get('direccion')!.touched)
+        }  
+        get barrioNoValido(){ 
+          return (this.formularioCliente!.get('barrio')!.invalid && this.formularioCliente!.get('barrio')!.touched) || (this.formularioCliente!.get('barrio')!.value == '' && this.formularioCliente!.get('barrio')!.touched)
+          }  
+          
+          get localidadNoValido(){ 
+            return (this.formularioCliente!.get('localidad')!.invalid && this.formularioCliente!.get('localidad')!.touched) || (this.formularioCliente!.get('localidad')!.value == '' && this.formularioCliente!.get('localidad')!.touched)
+            }  
+
+            get telefonoNoValido(){ 
+              return (this.formularioCliente!.get('telefono')!.invalid && this.formularioCliente!.get('telefono')!.touched) || (this.formularioCliente!.get('telefono')!.value == '' && this.formularioCliente!.get('telefono')!.touched)
+              }  
+            
 
 
 }
