@@ -14,7 +14,7 @@ export class InventarioService {
   getquery(query: string){ 
     const url = `http://localhost:8088/${query}`;
  
-    return this.http.get(url); 
+    return this.http.get<any>(url); 
  }
 
  putquery(query: string,id: number,body: any){ 

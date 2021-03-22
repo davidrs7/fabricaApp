@@ -1,9 +1,11 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { InventariosComponent } from './pages/inventarios/inventarios.component';
+import { GridsComponent } from './pages/grids/grids.component';
 
 const routes: Routes = [
     {path: 'inventarios',component: InventariosComponent},
+    {path: 'grids',component: GridsComponent},
     {path: '**', pathMatch: 'full', redirectTo: 'inventarios'}
 
 ];

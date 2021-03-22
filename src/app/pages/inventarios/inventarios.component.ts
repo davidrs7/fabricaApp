@@ -83,21 +83,21 @@ this.tallas.unshift({
   }
   
   get referenciaNovalido(){  
-    return (this.formulario.get('referencia').invalid && this.formulario.get('referencia').touched) || (this.formulario.get('referencia').value == 0 && this.formulario.get('referencia').touched);    
+    return (this.formulario.get('referencia')!.invalid && this.formulario.get('referencia')!.touched) || (this.formulario.get('referencia')!.value == 0 && this.formulario.get('referencia')!.touched);    
     }     
   get colorNovalido(){   
-     return (this.formulario.get('color').invalid && this.formulario.get('color').touched) || (this.formulario.get('color').value == 0 && this.formulario.get('color').touched);    
+     return (this.formulario.get('color')!.invalid && this.formulario.get('color')!.touched) || (this.formulario.get('color')!.value == 0 && this.formulario.get('color')!.touched);    
   }   
 
   get tallaNovalido(){ 
-     return (this.formulario.get('talla').invalid && this.formulario.get('talla').touched) || (this.formulario.get('talla').value == 0 && this.formulario.get('talla').touched)
+     return (this.formulario.get('talla')!.invalid && this.formulario.get('talla')!.touched) || (this.formulario.get('talla')!.value == 0 && this.formulario.get('talla')!.touched)
   }   
 
    get vendedorNovalido(){
-   return (this.formulario.get('vendedor').invalid && this.formulario.get('vendedor').touched) || (this.formulario.get('vendedor').value == 0 && this.formulario.get('vendedor').touched)
+   return (this.formulario.get('vendedor')!.invalid && this.formulario.get('vendedor')!.touched) || (this.formulario.get('vendedor')!.value == 0 && this.formulario.get('vendedor')!.touched)
    }   
    get cantidadNoValido(){ 
-    return (this.formulario.get('cantidad').invalid && this.formulario.get('cantidad').touched) || (this.formulario.get('cantidad').value == 0 && this.formulario.get('cantidad').touched)
+    return (this.formulario.get('cantidad')!.invalid && this.formulario.get('cantidad')!.touched) || (this.formulario.get('cantidad')!.value == 0 && this.formulario.get('cantidad')!.touched)
     }  
   
     limpiarmensaje(){
