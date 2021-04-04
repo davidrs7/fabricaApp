@@ -1,24 +1,31 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core'; 
 import { map } from 'rxjs/operators';
+import { environment } from '../../environments/environment';
+
 
 
 @Injectable({
   providedIn: 'root'
 })
+
+
+
 export class InventarioService {
+  baseUrl = environment.baseUrl;
+  
   idretorno: any; 
   constructor(private http: HttpClient) { }
-
+  
 
   getquery(query: string){ 
-    const url = `http://localhost:8088/${query}`;
- 
+    const url =  this.baseUrl + query
+    console.log(url);
     return this.http.get<any>(url); 
  }
 
  putquery(query: string,id: number,body: any){ 
-  const url = `http://localhost:8088/${query}/${id}`; 
+  const url = this.baseUrl + `${query}/${id}`; 
   return this.http.put<any>(url,body); 
 }
 
