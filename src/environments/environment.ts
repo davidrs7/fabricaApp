@@ -4,8 +4,8 @@
 
 export const environment = {
   production: false,
-  //baseUrl: 'http://localhost:8088/' 
-  baseUrl: 'https://restblinders.herokuapp.com/' 
+  baseUrl: 'http://localhost:8088/' 
+  //baseUrl: 'https://restblinders.herokuapp.com/' 
 };
 
 /*
