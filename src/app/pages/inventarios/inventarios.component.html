@@ -1,0 +1,209 @@
+ <!-- Formulario de datos que le interesan a la fabrica, por el momento los valores van quemados mientras se crea el servicio web para llenarlos dinamicamente -->
+ <form autocomplete="off" class="row g-3 talla"  [formGroup]="formulario!"> 
+    <div class="col-auto md-5">
+        <b>Referencia</b> 
+        <select class="form-select "  formControlName="referencia">  
+            <option
+            [class.is-invalid]="referenciaNovalido" 
+            style="color:gray" 
+            *ngFor="let referencia of referencias"
+            value="{{referencia.codigo}}">
+            {{referencia.nombre}}
+            </option>
+        </select>
+        <small *ngIf="referenciaNovalido" class="text-danger">
+            Seleccione una referencia
+        </small>
+    </div>
+    <div class="col-auto">
+        <b>Color</b> 
+        <select class="form-select "  formControlName="color">  
+        <option
+        [class.is-invalid]="colorNovalido" 
+        style="color:gray" 
+        *ngFor="let color of colores"
+        value="{{color.codigo}}">
+        {{color.nombre}}
+        </option>
+    </select>
+        <small *ngIf="colorNovalido" class="text-danger">
+            Seleccione un color
+        </small>
+    </div>
+        <div class="col-auto">
+          <b>Talla</b>  
+            <select class="form-select "  formControlName="talla">  
+                <option
+                [class.is-invalid]="tallaNovalido" 
+                style="color:gray" 
+                *ngFor="let talla of tallas"
+                value="{{talla.codigo}}">
+                {{talla.nombre}}
+                </option>
+            </select>
+            <small *ngIf="tallaNovalido" class="text-danger">
+                Seleccione una talla
+            </small>
+        </div>
+    
+        <div class="col-auto">
+            <b>Vendedor</b>  
+            <select class="form-select "  formControlName="vendedor">  
+                <option
+                [class.is-invalid]="vendedorNovalido" 
+                style="color:gray" 
+                *ngFor="let vendedor of vendedores" 
+                value="{{vendedor.codigo}}">
+                {{vendedor.nombres}} {{vendedor.apellidos}}
+                </option>
+            </select>
+            <small *ngIf="vendedorNovalido" class="text-danger">
+                Seleccione un vendedor
+            </small>
+        </div>
+        
+          <div class="col-auto">
+            <b>Cantidad</b>  
+           <input class="form-control" type="text" formControlName="cantidad" [class.is-invalid]="cantidadNoValido" />
+           <small *ngIf="cantidadNoValido" class="text-danger">
+            Por favor ingrese una cantidad numerica
+        </small>
+          </div>
+          <div class="col-auto">
+            <b>Valor Unidad</b>  
+           <input class="form-control" type="text" formControlName="vlrUnidad" [class.is-invalid]="vlrUnidadNoValido" />
+           <small *ngIf="vlrUnidadNoValido" class="text-danger">
+            Por favor ingrese un valor valido
+        </small>
+          </div>
+           
+          <div class="col-auto"> 
+              <b class="visually-hidden"></b>
+        </div>
+        <div class="col-auto">
+            <button type="button" (click)="validaDisponibilidad()" class="btn btn-primary">validar disponibilidad</button> 
+        </div>  
+    
+        <div class="col-auto">
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                Tabla inventario
+              </button>
+        </div> 
+        <div class="col-auto">  
+            <small *ngIf="mensajeDisponible.length>0" [class]="classDisponible">  
+            <b> {{mensajeDisponible}}</b>
+         </small></div>
+        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <app-grids></app-grids>
+        </div>
+      </form>
+      <br>  
+      <br>
+      
+      <!-- Formulario para llenar los datos del cliente -->
+    
+      <form autocomplete="off" class="row g-3 talla"  [formGroup]="formularioCliente!"   > 
+        <div class="col-auto">
+            <b>Nombres</b>  
+           <input class="form-control" type="text" formControlName="nombres" [class.is-invalid]="nombresNoValido" />
+           <small *ngIf="nombresNoValido" class="text-danger">
+            Por favor ingrese los nombres
+        </small>
+          </div>
+    
+          <div class="col-auto">
+            <b>Apellidos</b>  
+           <input class="form-control" type="text" formControlName="apellidos" [class.is-invalid]="apellidosNoValido" />
+           <small *ngIf="apellidosNoValido" class="text-danger">
+            Por favor ingrese los apellidos
+        </small>
+          </div>
+    
+          <div class="col-auto">
+            <b>Ciudad</b>  
+           <input class="form-control" type="text" formControlName="ciudad" [class.is-invalid]="ciudadNoValido" />
+           <small *ngIf="ciudadNoValido" class="text-danger">
+            Por favor ingrese la ciudad
+        </small>
+          </div> 
+          
+          <div class="col-auto">
+            <b>Direccion</b>  
+           <input class="form-control" type="text" formControlName="direccion" [class.is-invalid]="direccionNoValido" />
+           <small *ngIf="direccionNoValido" class="text-danger">
+            Por favor ingrese la direccion
+        </small>
+          </div>
+         
+          <div class="col-auto">
+            <b>Barrio</b>  
+           <input class="form-control" type="text" formControlName="barrio" [class.is-invalid]="barrioNoValido" />
+           <small *ngIf="barrioNoValido" class="text-danger">
+            Por favor ingrese  el barrio
+        </small>
+          </div>
+          <div class="col-auto">
+            <b>Localidad</b>  
+           <input class="form-control" type="text" formControlName="localidad" [class.is-invalid]="localidadNoValido" />
+           <small *ngIf="localidadNoValido" class="text-danger">
+            Por favor ingrese la localidad
+        </small>
+          </div>
+          <div class="col-auto">
+            <b>Telefono</b>  
+           <input class="form-control" type="text" formControlName="telefono" [class.is-invalid]="telefonoNoValido" />
+           <small *ngIf="telefonoNoValido" class="text-danger">
+            Por favor ingreseel telefono
+        </small>
+          </div>
+          <button type="button" class="btn btn-success block" (click)="Agregarfactura()"> + Agregar</button> 
+          
+
+          <div class="col-auto">  
+            <small *ngIf="mensajeFactura.length>0" [class]="classDisponible">  
+            <b> {{mensajeFactura}}</b>
+         </small></div> 
+        
+          </form>
+    <br>
+    <form autocomplete="off" class="row g-3"  [formGroup]="formFactura!">
+
+          <div class="row">
+            <div class="col">
+                <table class="table">
+                  <thead class="thead-dark">
+                    <tr>
+                      <th>Referencia</th> 
+                      <th>Talla</th>
+                      <th>Color</th>
+                      <th>Cantidad</th>
+                      <th>Vlr unidad</th>
+                      <th>Vlr total</th>
+                      <th></th>
+                    </tr>
+                  </thead>
+                  <tbody formArrayName="itemFactura" >
+                    <tr *ngFor="let item of itemFactura.controls; let i = index">
+                      <td> {{item.value.referencia}}</td>  
+                      <td>{{item.value.talla}}</td>
+                      <td>{{item.value.color}}</td>  
+                      <td>{{item.value.cantidad}}</td>  
+                      <td>{{item.value.vlrUnidad}}</td>                      
+                      <td>{{item.value.vlrUnidad * item.value.cantidad}}</td>
+                      <td>  
+                        <button class="btn btn-danger" type="button" (click)="borrarItemFactura(i)">
+                        borrar
+                     </button></td>
+                    </tr>
+                  </tbody>
+                </table>
+            </div>
+    
+        </div>
+        </form> 
+
+        <hr>
+
+        <pre>
+         formaFactura: {{formFactura?.value | json}}
+        </pre>
