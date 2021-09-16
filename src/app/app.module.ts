@@ -9,6 +9,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { NavbarComponent } from './pages/resources/navbar/navbar.component';
 import { FooterComponent } from './pages/resources/footer/footer.component';
+import { SplitPipe } from './pipes/split.pipe';
+import { SplitCodigoPipe } from './pipes/split-codigo.pipe';
 
 @NgModule({
   declarations: [
@@ -16,7 +18,9 @@ import { FooterComponent } from './pages/resources/footer/footer.component';
     InventariosComponent,
     GridsComponent,
     NavbarComponent,
-    FooterComponent
+    FooterComponent,
+    SplitPipe,
+    SplitCodigoPipe
   ],
   imports: [
     BrowserModule,

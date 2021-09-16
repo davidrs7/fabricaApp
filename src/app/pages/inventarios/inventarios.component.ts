@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators, FormArray } from '@angular/forms';
 import { InventarioService } from '../../services/inventario.service';
 import { element } from 'protractor';
 import { referencia } from '../../models/referencia';
+import { SplitCodigoPipe } from '../../pipes/split-codigo.pipe';
 
 interface itemFactura { 
   referencia:string
@@ -10,7 +11,6 @@ interface itemFactura {
   talla: string
   color: string
   vlrUnidad: string
-
 }
 
 @Component({
@@ -18,7 +18,10 @@ interface itemFactura {
   templateUrl: './inventarios.component.html',
   styleUrls: ['./inventarios.component.css']
 })
+
+
 export class InventariosComponent implements OnInit {
+  
   referencias: any[] = [];
   colores: any[] = [];
   tallas: any[] = [];
@@ -73,21 +76,16 @@ export class InventariosComponent implements OnInit {
    
     let Form = this.formulario?.value;
  //   if (this.formulario!.invalid && this.formularioCliente!.invalid){
-    if (this.formulario!.invalid){
-     
+    if (this.formulario!.invalid){ 
       Object.values(this.formulario!.controls).forEach(control => {
         control.markAsTouched();
       });
-    //  Object.values(this.formularioCliente!.controls).forEach(control => {
-     //   control.markAsTouched();
-    //  });
       return; 
     } else {  
       //this.mensajeFactura ="Funcionalidad en construcción"      
-      this.itemFactura.push(this.fb.control(Form)); 
-     
-      console.log(this.itemFactura.controls);
- 
+      this.itemFactura.push(this.fb.control(Form));  
+      console.log(this.itemFactura.controls); 
+      console.log(this.itemFactura); 
     }      
   }                                          
 
@@ -102,41 +100,46 @@ export class InventariosComponent implements OnInit {
  
 
   ngOnInit(): void {
+
+    //get Referencias
     this.ServiceInventario.getReferencias()
-    .subscribe(referencias => {
+    .subscribe(referencias => {  
       this.referencias = referencias;
 
     this.referencias.unshift({
       nombre: 'seleccione una referencia',
-      codigo: '0'}); 
-//  console.log(paises);
-}); 
-this.ServiceInventario.getColores()
+      codigo: '0'});  
+      }); 
+
+      //get Colores
+    this.ServiceInventario.getColores()
             .subscribe(colores => {
               this.colores = colores;
         
-this.colores.unshift({
-      nombre: 'seleccione un color',
-      codigo: '0'});  
-}); 
+      this.colores.unshift({
+            nombre: 'seleccione un color',
+            codigo: '0'});  
+      }); 
 
-this.ServiceInventario.getVendedores()
-            .subscribe(vendedores => {
-              this.vendedores = vendedores;
-        
-this.vendedores.unshift({
-      nombres: 'seleccione un vendedor',
-      codigo: '0'});  
-}); 
-
-this.ServiceInventario.getTallas()
-            .subscribe(tallas => {
-              this.tallas = tallas;
-        
-this.tallas.unshift({
-      nombre: 'seleccione una talla',
-      codigo: '0'});   
-}); 
+     //get Vendedores
+    this.ServiceInventario.getVendedores()
+                .subscribe(vendedores => {
+                  this.vendedores = vendedores;
+            
+    this.vendedores.unshift({
+          nombres: 'seleccione un vendedor',
+          codigo: '0'});  
+    }); 
+    
+    //get Tallas
+    this.ServiceInventario.getTallas()
+                .subscribe(tallas => {
+                  this.tallas = tallas;
+            
+    this.tallas.unshift({
+          nombre: 'seleccione una talla',
+          codigo: '0-seleccione una talla'});   
+    }); 
   }
 
     limpiarmensaje(){
@@ -144,6 +147,8 @@ this.tallas.unshift({
     }
  
   validaDisponibilidad(){  
+
+    const pipeCodigo = new SplitCodigoPipe();
     if (this.formulario!.invalid){
      
       Object.values(this.formulario!.controls).forEach(control => {
@@ -154,7 +159,7 @@ this.tallas.unshift({
    //console.log(this.formulario.value);
    this.ServiceInventario.getInventarios()
    .subscribe(inventarios => {
-     this.inventarioConsultado =inventarios.filter(element => element.ref_codigo == this.formulario!.value.referencia && element.talla_codigo == this.formulario!.value.talla && element.color_codigo ==this.formulario!.value.color);
+     this.inventarioConsultado =inventarios.filter(element => element.ref_codigo  == pipeCodigo.transform(this.formulario!.value.referencia)  && element.talla_codigo == pipeCodigo.transform(this.formulario!.value.talla) && element.color_codigo == pipeCodigo.transform(this.formulario!.value.color));
      this.inventarioTotal = inventarios
  
      

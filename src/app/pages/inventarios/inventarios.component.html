@@ -7,7 +7,7 @@
             [class.is-invalid]="referenciaNovalido" 
             style="color:gray" 
             *ngFor="let referencia of referencias"
-            value="{{referencia.codigo}}">
+            value="{{referencia.codigo}}-{{referencia.nombre}}">
             {{referencia.nombre}}
             </option>
         </select>
@@ -22,7 +22,7 @@
         [class.is-invalid]="colorNovalido" 
         style="color:gray" 
         *ngFor="let color of colores"
-        value="{{color.codigo}}">
+        value="{{color.codigo}}-{{color.nombre}}">
         {{color.nombre}}
         </option>
     </select>
@@ -37,7 +37,7 @@
                 [class.is-invalid]="tallaNovalido" 
                 style="color:gray" 
                 *ngFor="let talla of tallas"
-                value="{{talla.codigo}}">
+                value="{{talla.codigo}}-{{talla.nombre}}">
                 {{talla.nombre}}
                 </option>
             </select>
@@ -53,7 +53,7 @@
                 [class.is-invalid]="vendedorNovalido" 
                 style="color:gray" 
                 *ngFor="let vendedor of vendedores" 
-                value="{{vendedor.codigo}}">
+                value="{{vendedor.codigo}}-{{vendedor.nombres}} {{vendedor.apellidos}}">
                 {{vendedor.nombres}} {{vendedor.apellidos}}
                 </option>
             </select>
@@ -184,12 +184,12 @@
                   </thead>
                   <tbody formArrayName="itemFactura" >
                     <tr *ngFor="let item of itemFactura.controls; let i = index">
-                      <td> {{item.value.referencia}}</td>  
-                      <td>{{item.value.talla}}</td>
-                      <td>{{item.value.color}}</td>  
+                      <td> {{item.value.referencia | split}}</td>  
+                      <td>{{item.value.talla | split}}  </td>
+                      <td>{{item.value.color | split }}</td>  
                       <td>{{item.value.cantidad}}</td>  
-                      <td>{{item.value.vlrUnidad}}</td>                      
-                      <td>{{item.value.vlrUnidad * item.value.cantidad}}</td>
+                      <td>${{item.value.vlrUnidad}}</td>                      
+                      <td>${{item.value.vlrUnidad * item.value.cantidad}}</td>
                       <td>  
                         <button class="btn btn-danger" type="button" (click)="borrarItemFactura(i)">
                         borrar
