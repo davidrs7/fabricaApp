@@ -35,6 +35,8 @@ export class InventariosComponent implements OnInit {
   formularioCliente:FormGroup | undefined;
   formFactura : FormGroup | undefined;
   itemsFacturas: itemFactura[] = [];
+  ValorTotal: any = 0;
+  ValTotal: any = 0;
   constructor(private ServiceInventario: InventarioService,private fb: FormBuilder) {
      this.crearFormulario();
      this.crearFormularioCliente();
@@ -48,7 +50,8 @@ export class InventariosComponent implements OnInit {
       talla:['0',Validators.required],
       vendedor:['0',Validators.required],      
       cantidad:['',[Validators.required,Validators.pattern("^[0-9]*$")]],       
-      vlrUnidad:['',[Validators.required,Validators.pattern("^[0-9]*$")]],       
+      vlrUnidad:['',[Validators.required,Validators.pattern("^[0-9]*$")]]
+ 
     }); 
   }
 
@@ -84,8 +87,16 @@ export class InventariosComponent implements OnInit {
     } else {  
       //this.mensajeFactura ="Funcionalidad en construcción"      
       this.itemFactura.push(this.fb.control(Form));  
-      console.log(this.itemFactura.controls); 
-      console.log(this.itemFactura); 
+      console.log(this.itemFactura.controls);  
+      console.log(this.itemFactura.controls[0].value['cantidad']);   
+      this.ValTotal = 0;
+      for (let i=0; i < this.itemFactura.controls.length ; i++ )
+      {
+          this.ValTotal += this.itemFactura.controls[i].value['cantidad'] * this.itemFactura.controls[i].value['vlrUnidad'] ;
+      }
+        
+      this.ValorTotal = this.ValTotal;
+      console.log(this.ValorTotal);
     }      
   }                                          
 
@@ -93,9 +104,12 @@ export class InventariosComponent implements OnInit {
     return this.formFactura?.get('itemFactura') as FormArray;
   }
 
-  borrarItemFactura(i : number){ 
-      
+  borrarItemFactura(i : number){  
+    this.ValTotal = 0;  
+    this.ValTotal = this.itemFactura.controls[i].value['cantidad'] * this.itemFactura.controls[i].value['vlrUnidad'] ; 
+    this.ValorTotal = this.ValorTotal - this.ValTotal;
     this.itemFactura.removeAt(i);
+    console.log(this.ValorTotal);
   }
  
 
