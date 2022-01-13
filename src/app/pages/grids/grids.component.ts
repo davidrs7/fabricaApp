@@ -14,12 +14,13 @@ export class GridsComponent implements OnInit {
   editField: string = "";
   bodyUpdateInventario: 
   {
-  inventario_codigo : number,
+  //inventario_codigo : number,
   ref_codigo        : number,
   talla_codigo      : number,
   color_codigo      : number,
   cantidad          : number
-  } = {inventario_codigo:0, ref_codigo:0,talla_codigo:0,color_codigo:0,cantidad:0};
+  } = {//inventario_codigo:0, 
+    ref_codigo:0,talla_codigo:0,color_codigo:0,cantidad:0};
   constructor(private ServiceInventario: InventarioService) {
      
    }
@@ -29,7 +30,7 @@ export class GridsComponent implements OnInit {
     .subscribe(invnetario => {
       this.inventario = invnetario;
       this.awaitInventario = invnetario;
-   //console.log(this.inventario);
+   console.log(this.inventario);
 }); 
   }
 
@@ -37,14 +38,9 @@ export class GridsComponent implements OnInit {
     console.log('Hola');
     const editField = event.target.textContent;
     this.inventario[id][property] = editField;
-
-      // console.log(this.inventario[id]['cantidad']);
-    // console.log(this.inventario[id]['ref_codigo']);
-    // console.log(this.inventario[id]['codigo']);
-    // console.log(this.inventario[id]['color_codigo']);
-    // console.log(this.inventario[id]['talla_codigo']);
+ 
     this.bodyUpdateInventario = {
-      inventario_codigo : this.inventario[id]['codigo'],
+     // inventario_codigo : this.inventario[id]['codigo'],
       ref_codigo : this.inventario[id]['ref_codigo'],
       talla_codigo: this.inventario[id]['talla_codigo'],
       color_codigo: this.inventario[id]['color_codigo'],

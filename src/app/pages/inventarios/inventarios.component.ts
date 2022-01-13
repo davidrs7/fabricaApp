@@ -118,8 +118,7 @@ export class InventariosComponent implements OnInit {
     //get Referencias
     this.ServiceInventario.getReferencias()
     .subscribe(referencias => {  
-      this.referencias = referencias;
-
+    this.referencias = referencias; 
     this.referencias.unshift({
       nombre: 'seleccione una referencia',
       codigo: '0'});  
@@ -135,7 +134,7 @@ export class InventariosComponent implements OnInit {
             codigo: '0'});  
       }); 
 
-     //get Vendedores
+  //get Vendedores
     this.ServiceInventario.getVendedores()
                 .subscribe(vendedores => {
                   this.vendedores = vendedores;
@@ -147,7 +146,7 @@ export class InventariosComponent implements OnInit {
     
     //get Tallas
     this.ServiceInventario.getTallas()
-                .subscribe(tallas => {
+                .subscribe(tallas => { 
                   this.tallas = tallas;
             
     this.tallas.unshift({
@@ -156,7 +155,7 @@ export class InventariosComponent implements OnInit {
     }); 
   }
 
-    limpiarmensaje(){
+    limpiarmensaje(){ 
       this.mensajeDisponible = "";
     }
  
@@ -173,7 +172,7 @@ export class InventariosComponent implements OnInit {
    //console.log(this.formulario.value);
    this.ServiceInventario.getInventarios()
    .subscribe(inventarios => {
-     this.inventarioConsultado =inventarios.filter(element => element.ref_codigo  == pipeCodigo.transform(this.formulario!.value.referencia)  && element.talla_codigo == pipeCodigo.transform(this.formulario!.value.talla) && element.color_codigo == pipeCodigo.transform(this.formulario!.value.color));
+     this.inventarioConsultado =inventarios.filter((element:any) => element.ref_codigo  == pipeCodigo.transform(this.formulario!.value.referencia)  && element.talla_codigo == pipeCodigo.transform(this.formulario!.value.talla) && element.color_codigo == pipeCodigo.transform(this.formulario!.value.color));
      this.inventarioTotal = inventarios
  
      

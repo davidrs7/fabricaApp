@@ -2,18 +2,16 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core'; 
 import { map } from 'rxjs/operators';
 import { environment } from '../../environments/environment';
+import { referencia } from '../models/referencia';
 
 @Injectable({
   providedIn: 'root'
 })
  
 export class InventarioService {
-  baseUrl = environment.baseUrl;
-  
+  baseUrl = environment.baseUrl; 
   idretorno: any; 
-  constructor(private http: HttpClient) { }
-  
-
+  constructor(private http: HttpClient) { } 
   getquery(query: string){ 
     const url =  this.baseUrl + query
     console.log(url);
@@ -30,32 +28,30 @@ updateInvenraios(id: number,body: any){
   return this.putquery('Inventario',id,body)
               .subscribe(data => this.idretorno = data.inventario_codigo 
                 )
-  console.log(this.idretorno);
+  //console.log(this.idretorno);
 
 }
 
- getReferencias(){ 
-     
-  return this.getquery('referencias')
+ getReferencias(){     
+  return this.getquery('Referencias') 
   .pipe(
-    map((resp:any[]) => {
-      return resp.map( referencia => {
-       // console.log(referencia);
-        return { codigo: referencia.ref_codigo, nombre: referencia.ref_descripcion} 
-      } )
+    map((resp) => {
+      return resp.data.map( (referencia:any) => {
+        console.log(referencia);
+        return { codigo: referencia.refCodigo, nombre: referencia.refDescripcion} 
+      })
     })
   ); 
 } 
  
 
-getColores(){ 
-     
+getColores(){     
   return this.getquery('Colores')
   .pipe(
-    map((resp:any[]) => {
-      return resp.map( color => {
+    map((resp) => {
+      return resp.data.map( (color:any) => {
         //console.log(color);
-        return { codigo: color.color_Codigo, nombre: color.color_Descripcion} 
+        return { codigo: color.colorCodigo, nombre: color.colorDescripcion} 
       } )
     })
   ); 
@@ -64,12 +60,12 @@ getColores(){
 getVendedores(){  
   return this.getquery('vendedores')
   .pipe(
-    map((resp:any[]) => {
-      return resp.map( vendedor => {
+    map((resp) => {
+      return resp.data.map( (vendedor:any) => {
      //   console.log(vendedor);
-        return { codigo: vendedor.vendedor_CODIGO, 
-                 nombres: vendedor.vendedor_NOMBRES,
-                 apellidos: vendedor.vendedor_APELLIDOS } 
+        return { codigo: vendedor.vendedorCodigo, 
+                 nombres: vendedor.vendedorNombres,
+                 apellidos: vendedor.vendedorApellidos } 
       } )
     })
   ); 
@@ -78,19 +74,18 @@ getVendedores(){
 getInventarios(){  
   return this.getquery('Inventario')
   .pipe(
-    map((resp:any[]) => {
-      return resp.map( Inventario => {
-     //   console.log(vendedor);
-        return { codigo: Inventario.inventario_codigo, 
-                 ref_codigo: Inventario.ref_codigo,
-                 ref_descripcion: Inventario.referencias.ref_descripcion,
-                 talla_codigo: Inventario.talla_codigo,
-                 talla_descripcion: Inventario.tallas.talla_descripcion,
-                 color_codigo: Inventario.color_codigo,
-                 color_Descripcion: Inventario.colores.color_Descripcion,                 
-                 cantidad: Inventario.cantidad
-                 
-                } 
+    map((resp:any) => {
+      return resp.data.map( (Inventario:any) => {
+        //console.log(Inventario); 
+       return { codigo: Inventario.inventarioCodigo, 
+                 ref_codigo: Inventario.refCodigo,
+                 ref_descripcion: Inventario.refDesc,
+                 talla_codigo: Inventario.tallaCodigo,
+                 talla_descripcion: Inventario.tallaDesc,
+                 color_codigo: Inventario.colorCodigo,
+                 color_Descripcion: Inventario.colorDesc,                 
+                 cantidad: Inventario.cantidad            
+                }       
       } )
     })
   ); 
@@ -101,10 +96,10 @@ getTallas(){
      
   return this.getquery('Tallas')
   .pipe(
-    map((resp:any[]) => {
-      return resp.map( talla => {
+    map((resp) => {
+      return resp.data.map( (talla:any) => {
     //    console.log(talla);
-        return { codigo: talla.talla_Codigo, nombre: talla.talla_descripcion} 
+        return { codigo: talla.tallaCodigo, nombre: talla.tallaDescripcion} 
       } )
     })
   ); 
